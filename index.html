@@ -381,7 +381,7 @@
             <li>Para criar o hábito da cocriação de verdade</li>
           </ul>
         </div>
-        <div class="vbox seamless" data-seamless><video src="/video/baralho2.mp4" muted playsinline preload="auto"></video><video src="/video/baralho2.mp4" muted playsinline preload="auto"></video></div>
+        <div class="vbox seamless" data-seamless><video src="/video/baralho2.mp4" poster="/img/poster-baralho2.jpg" muted playsinline preload="auto" autoplay></video><video src="/video/baralho2.mp4" poster="/img/poster-baralho2.jpg" muted playsinline preload="none"></video></div>
       </div>
     </div>
   </section>
@@ -421,7 +421,7 @@
             <li>Versão para imprimir incluída</li>
           </ul>
         </div>
-        <div class="phone p916 seamless" data-seamless><video src="/video/app-baralho.mp4" muted playsinline preload="auto"></video><video src="/video/app-baralho.mp4" muted playsinline preload="auto"></video></div>
+        <div class="phone p916 seamless" data-seamless><video src="/video/app-baralho.mp4" poster="/img/poster-app-baralho.jpg" muted playsinline preload="metadata"></video><video src="/video/app-baralho.mp4" poster="/img/poster-app-baralho.jpg" muted playsinline preload="none"></video></div>
       </div>
     </div>
   </section>
@@ -511,7 +511,7 @@
               <li>Acesso vitalício, para praticar quantas vezes quiser</li>
             </ul>
           </div>
-          <div class="phone crop p916 seamless" data-seamless style="background-image:url(/img/capa-chama-violeta.jpg)"><video src="/video/chama.mp4" muted playsinline preload="auto"></video><video src="/video/chama.mp4" muted playsinline preload="auto"></video></div>
+          <div class="phone crop p916 seamless" data-seamless style="background-image:url(/img/capa-chama-violeta.jpg)"><video src="/video/chama.mp4" poster="/img/poster-chama.jpg" muted playsinline preload="metadata"></video><video src="/video/chama.mp4" poster="/img/poster-chama.jpg" muted playsinline preload="none"></video></div>
         </div>
       </div>
       <div class="sum">
@@ -560,7 +560,7 @@
               <li>Incluso no Kit, sem custo a mais</li>
             </ul>
           </div>
-          <div class="phone p916 seamless" data-seamless><video src="/video/casa.mp4" muted playsinline preload="auto"></video><video src="/video/casa.mp4" muted playsinline preload="auto"></video></div>
+          <div class="phone p916 seamless" data-seamless><video src="/video/casa.mp4" poster="/img/poster-casa.jpg" muted playsinline preload="metadata"></video><video src="/video/casa.mp4" poster="/img/poster-casa.jpg" muted playsinline preload="none"></video></div>
         </div>
       </div>
       <div class="trilogy">
@@ -611,7 +611,7 @@
             <li>Leia no celular ou imprima para consultar quando quiser</li>
           </ul>
         </div>
-        <div class="vbox sq seamless" data-seamless><video src="/video/decod-quad.mp4" muted playsinline preload="auto"></video><video src="/video/decod-quad.mp4" muted playsinline preload="auto"></video></div>
+        <div class="vbox sq seamless" data-seamless><video src="/video/decod-quad.mp4" poster="/img/poster-decod-quad.jpg" muted playsinline preload="metadata"></video><video src="/video/decod-quad.mp4" poster="/img/poster-decod-quad.jpg" muted playsinline preload="none"></video></div>
       </div>
     </div>
   </section>
@@ -900,7 +900,9 @@
             setTimeout(function(){ cur.pause(); try{cur.currentTime=0}catch(e){} a=1-a; swapping=false; }, FADE*1000+60); } }
         vs.forEach(function(v){ v.addEventListener("timeupdate",tick); v.addEventListener("ended",function(){ if(!swapping) tick(); }); });
         (function raf(){ tick(); requestAnimationFrame(raf); })();
-        if(!("IntersectionObserver" in window)){visible=true; vs[a].play(); return;}
+        function warm(){ vs.forEach(function(v){ if(v.preload!=="auto"){ v.preload="auto"; v.load(); } }); }
+        if(!("IntersectionObserver" in window)){warm(); visible=true; vs[a].play(); return;}
+        var near=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ warm(); near.disconnect(); } }); },{rootMargin:"900px 0px"}); near.observe(box);
         new IntersectionObserver(function(es){ es.forEach(function(e){ visible=e.isIntersecting; if(visible) vs[a].play().catch(function(){}); else vs.forEach(function(v){v.pause()}); }); },{threshold:.3}).observe(box);
       });
     })();
